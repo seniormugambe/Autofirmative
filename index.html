@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <title>Payment Automation System</title>
@@ -7,59 +7,96 @@
 <style>
 
 body{
-    font-family: Arial;
-    background:#f4f6f9;
     margin:0;
+    font-family: Arial;
+    background:#f1f3f6;
 }
 
-header{
-    background:#2c3e50;
+/* Sidebar */
+
+.sidebar{
+    width:220px;
+    height:100vh;
+    background:#1e2a38;
+    position:fixed;
     color:white;
-    padding:15px;
+    padding-top:20px;
+}
+
+.sidebar h2{
     text-align:center;
 }
 
-.container{
-    width:80%;
-    margin:auto;
-    margin-top:30px;
+.sidebar a{
+    display:block;
+    padding:12px 20px;
+    color:white;
+    text-decoration:none;
 }
+
+.sidebar a:hover{
+    background:#2c3e50;
+}
+
+/* Main */
+
+.main{
+    margin-left:220px;
+    padding:30px;
+}
+
+/* Cards */
 
 .card{
     background:white;
     padding:20px;
+    border-radius:10px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.1);
     margin-bottom:20px;
-    border-radius:8px;
-    box-shadow:0 0 10px rgba(0,0,0,0.1);
 }
 
-input, select{
+.card h3{
+    margin-top:0;
+}
+
+/* Inputs */
+
+input,select{
     width:100%;
     padding:10px;
     margin-top:10px;
     margin-bottom:15px;
+    border-radius:5px;
+    border:1px solid #ccc;
 }
 
 button{
-    background:#3498db;
+    background:#0077ff;
     color:white;
     border:none;
     padding:10px 20px;
+    border-radius:5px;
     cursor:pointer;
 }
 
 button:hover{
-    background:#2980b9;
+    background:#005fd1;
 }
+
+/* Table */
 
 table{
     width:100%;
     border-collapse: collapse;
 }
 
-th, td{
-    padding:10px;
+th,td{
+    padding:12px;
     border-bottom:1px solid #ddd;
+}
+
+th{
+    background:#f5f5f5;
 }
 
 </style>
@@ -67,16 +104,26 @@ th, td{
 
 <body>
 
-<header>
-<h2>Payment Automation Dashboard</h2>
-</header>
+<div class="sidebar">
 
-<div class="container">
+<h2>PayAuto</h2>
+
+<a href="#">Dashboard</a>
+<a href="#">Schedule Payment</a>
+<a href="#">Payment History</a>
+<a href="#">Settings</a>
+
+</div>
+
+
+<div class="main">
 
 <div class="card">
+
 <h3>Schedule Automated Payment</h3>
 
 <input type="text" id="recipient" placeholder="Recipient Name">
+
 <input type="number" id="amount" placeholder="Amount">
 
 <select id="frequency">
@@ -91,9 +138,11 @@ th, td{
 
 
 <div class="card">
+
 <h3>Scheduled Payments</h3>
 
 <table>
+
 <thead>
 <tr>
 <th>Recipient</th>
@@ -102,9 +151,7 @@ th, td{
 </tr>
 </thead>
 
-<tbody id="paymentTable">
-
-</tbody>
+<tbody id="paymentTable"></tbody>
 
 </table>
 
@@ -120,6 +167,11 @@ function addPayment(){
 let recipient = document.getElementById("recipient").value
 let amount = document.getElementById("amount").value
 let frequency = document.getElementById("frequency").value
+
+if(recipient=="" || amount==""){
+    alert("Please fill all fields")
+    return
+}
 
 let table = document.getElementById("paymentTable")
 
